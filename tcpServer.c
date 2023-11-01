@@ -48,13 +48,17 @@ int main(){
     printf("Client: %s\n", buffer);
     bzero(filebuffer, 1024);
     // Записать сообщение от клиента в файл
-    FILE *log = fopen("log.txt", "w+");
+    FILE *log = fopen("log.txt", "a+");
     if (log != NULL) {
         printf("Log file opened successfully");
         fputs(buffer, log);
+        fclose(log);
+
+        log = fopen("log.txt", "r");
 
         fgets(filebuffer, 1024, log);
         printf("log:%s", filebuffer);
+        fclose(log);
     }
 
 
