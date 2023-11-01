@@ -7,7 +7,7 @@
 int main(){
     char *ip = "127.0.0.1";
     int port = 8000;
-    
+
     int sock;
     struct sockaddr_in addr;
     socklen_t addr_size;
@@ -34,12 +34,12 @@ int main(){
     printf("[>]Client: %s\n", buffer);
     send(sock, buffer, strlen(buffer), 0);
 
-    bool accepting_file = true;
-    while(accepting_file) {
+    boolean accepting_file = 1;
+    while(accepting_file == 1) {
         bzero(buffer, 1024);
         recv(sock, buffer, sizeof(buffer), 0);
         if (strcmp(buffer, ":end:") == 0) {
-            accepting_file = false;
+            accepting_file = 0;
         } else {
             printf("[<]Server: %s\n", buffer);
         }
