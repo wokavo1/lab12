@@ -53,21 +53,19 @@ int main(){
         printf("Log file opened successfully\n");
         fputs(buffer, log);
         fclose(log);
-
-        log = fopen("log.txt", "r");
-
-        fgets(filebuffer, 1024, log);
-        printf("log:%s\n", filebuffer);
-        fclose(log);
     }
 
+    FILE *serverdata = fopen("serverdata.txt", "r");
+    if (serverdata != NULL) {
+        fgets(filebuffer, 1024, serverdata);
+        fclose(serverdata);
+    }
 
     printf("Server: %s\n", filebuffer);
     send(client_sock, filebuffer, strlen(filebuffer), 0);
 
     close(client_sock);
     printf("[+]Client disconnected.\n\n");
-
   }
 
   return 0;
