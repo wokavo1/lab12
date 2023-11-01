@@ -65,6 +65,9 @@ int main(){
             fclose(serverdata);
         }
 
+        strcpy(buffer, ":end:");
+        send(client_sock, buffer, strlen(buffer), 0);
+
         close(client_sock);
         printf("[+]Client connection closed.\n\n");
     }
