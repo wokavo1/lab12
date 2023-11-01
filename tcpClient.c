@@ -2,55 +2,46 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-
-#define PORT 4444
 
 int main(){
 
-	int clientSocket, ret;
-	struct sockaddr_in serverAddr;
-	char buffer[1024];
+  char *ip = "127.0.0.1";
+  int port = 8000;
 
-	clientSocket = socket(AF_INET, SOCK_STREAM, 0);
-	if(clientSocket < 0){
-		printf("[-]Error in connection.\n");
-		exit(1);
-	}
-	printf("[+]Client Socket is created.\n");
+  int sock;
+  struct sockaddr_in addr;
+  socklen_t addr_size;
+  char buffer[1024];
+  int n;
 
-	memset(&serverAddr, '\0', sizeof(serverAddr));
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(PORT);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+  sock = socket(AF_INET, SOCK_STREAM, 0);
+  if (sock < 0){
+    perror("[-]Socket error");
+    exit(1);
+  }
+  printf("[+]TCP server socket created.\n");
 
-	ret = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-	if(ret < 0){
-		printf("[-]Error in connection.\n");
-		exit(1);
-	}
-	printf("[+]Connected to Server.\n");
+  memset(&addr, '\0', sizeof(addr));
+  addr.sin_family = AF_INET;
+  addr.sin_port = port;
+  addr.sin_addr.s_addr = inet_addr(ip);
 
-	while(1){
-		printf("Client: \t");
-		scanf("%s", &buffer[0]);
-		send(clientSocket, buffer, strlen(buffer), 0);
+  connect(sock, (struct sockaddr*)&addr, sizeof(addr));
+  printf("Connected to the server.\n");
 
-		if(strcmp(buffer, ":exit") == 0){
-			close(clientSocket);
-			printf("[-]Disconnected from server.\n");
-			exit(1);
-		}
+  bzero(buffer, 1024);
+  strcpy(buffer, "HELLO, THIS IS CLIENT.");
+  printf("Client: %s\n", buffer);
+  send(sock, buffer, strlen(buffer), 0);
 
-		if(recv(clientSocket, buffer, 1024, 0) < 0){
-			printf("[-]Error in receiving data.\n");
-		}else{
-			printf("Server: \t%s\n", buffer);
-		}
-	}
+  bzero(buffer, 1024);
+  recv(sock, buffer, sizeof(buffer), 0);
+  printf("Server: %s\n", buffer);
 
-	return 0;
+  close(sock);
+  printf("Disconnected from the server.\n");
+
+  return 0;
+
 }
