@@ -37,7 +37,7 @@ int main(){
     int accepting_file = 1;
     while(accepting_file == 1) {
         bzero(buffer, 1024);
-        recv(sock, buffer, sizeof(buffer), 0);
+        recv(sock, buffer, 20, 0);
         if (strcmp(buffer, ":end:") == 0) {
             accepting_file = 0;
         } else {
