@@ -38,13 +38,10 @@ int main(){
     while(accepting_file == 1) {
         bzero(buffer, 1024);
         recv(sock, buffer, 20, 0);
-        if (strcmp(buffer, ":end:") == 0) {
-            accepting_file = 0;
-        } else {
-            printf("[<]Server: [%s]\n", buffer);
-        }
         if (strcmp(buffer, "") == 0) {
             accepting_file = 0;
+        } else {
+            printf("[<]Server: %s\n", buffer);
         }
     }
 
