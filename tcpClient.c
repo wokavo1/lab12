@@ -34,7 +34,7 @@ int main(){
     printf("[>]Client: %s\n", buffer);
     send(sock, buffer, strlen(buffer), 0);
 
-    boolean accepting_file = 1;
+    int accepting_file = 1;
     while(accepting_file == 1) {
         bzero(buffer, 1024);
         recv(sock, buffer, sizeof(buffer), 0);
