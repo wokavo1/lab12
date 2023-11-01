@@ -60,11 +60,12 @@ int main(){
             while (fgets(buffer, 20, serverdata)) {
                 printf("[>]Server: %s\n", buffer);
                 send(client_sock, buffer, strlen(buffer), 0);
-                bzero(buffer, 20);
+                bzero(buffer, 1024);
             } 
             fclose(serverdata);
         }
 
+        bzero(buffer, 1024);
         strcpy(buffer, ":end:");
         send(client_sock, buffer, strlen(buffer), 0);
 
