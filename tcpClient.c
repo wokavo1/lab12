@@ -43,6 +43,9 @@ int main(){
         } else {
             printf("[<]Server: [%s]\n", buffer);
         }
+        if (strcmp(buffer, "") == 0) {
+            accepting_file = 0;
+        }
     }
 
     close(sock);
