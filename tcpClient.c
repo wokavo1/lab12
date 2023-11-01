@@ -41,7 +41,7 @@ int main(){
         if (strcmp(buffer, ":end:") == 0) {
             accepting_file = 0;
         } else {
-            printf("[<]Server: %s\n", buffer);
+            printf("[<]Server: [%s]\n", buffer);
         }
     }
 
