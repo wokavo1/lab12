@@ -13,6 +13,7 @@ int main(){
   struct sockaddr_in server_addr, client_addr;
   socklen_t addr_size;
   char buffer[1024];
+  char filebuffer[1024];
   int n;
 
   server_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -45,11 +46,20 @@ int main(){
     bzero(buffer, 1024);
     recv(client_sock, buffer, sizeof(buffer), 0);
     printf("Client: %s\n", buffer);
+    bzero(filebuffer, 1024);
+    // Записать сообщение от клиента в файл
+    FILE *log = fopen("log.txt", "w+");
+    if (log != NULL) {
+        printf("Log file opened successfully");
+        fputs(buffer, log);
 
-    bzero(buffer, 1024);
-    strcpy(buffer, "HI, THIS IS SERVER. HAVE A NICE DAY!!!");
-    printf("Server: %s\n", buffer);
-    send(client_sock, buffer, strlen(buffer), 0);
+        fgets(filebuffer, 1024, log);
+        printf("log:%s", filebuffer);
+    }
+
+
+    printf("Server: %s\n", filebuffer);
+    send(client_sock, filebuffer, strlen(filebuffer), 0);
 
     close(client_sock);
     printf("[+]Client disconnected.\n\n");
