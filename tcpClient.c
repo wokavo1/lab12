@@ -31,7 +31,7 @@ int main(){
   printf("Connected to the server.\n");
 
   bzero(buffer, 1024);
-  strcpy(buffer, "Ilya Cherkasov 8K03");
+  strcpy(buffer, "Ilya Cherkasov 8K03\n");
   printf("Client: %s\n", buffer);
   send(sock, buffer, strlen(buffer), 0);
 

@@ -50,14 +50,14 @@ int main(){
     // Записать сообщение от клиента в файл
     FILE *log = fopen("log.txt", "a+");
     if (log != NULL) {
-        printf("Log file opened successfully");
+        printf("Log file opened successfully\n");
         fputs(buffer, log);
         fclose(log);
 
         log = fopen("log.txt", "r");
 
         fgets(filebuffer, 1024, log);
-        printf("log:%s", filebuffer);
+        printf("log:%s\n", filebuffer);
         fclose(log);
     }
 
