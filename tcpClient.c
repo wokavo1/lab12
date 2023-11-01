@@ -28,19 +28,19 @@ int main(){
   addr.sin_addr.s_addr = inet_addr(ip);
 
   connect(sock, (struct sockaddr*)&addr, sizeof(addr));
-  printf("Connected to the server.\n");
+  printf("[~]Connected to the server.\n");
 
   bzero(buffer, 1024);
-  strcpy(buffer, "Ilya Cherkasov 8K03\n");
-  printf("Client: %s\n", buffer);
+  strcpy(buffer, "Ilya Cherkasov 8K03");
+  printf("[>]Client: %s\n", buffer);
   send(sock, buffer, strlen(buffer), 0);
 
   bzero(buffer, 1024);
   recv(sock, buffer, sizeof(buffer), 0);
-  printf("Server: %s\n", buffer);
+  printf("[<]Server: %s\n", buffer);
 
   close(sock);
-  printf("Disconnected from the server.\n");
+  printf("[~]Disconnected from the server.\n");
 
   return 0;
 

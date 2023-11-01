@@ -45,23 +45,25 @@ int main(){
 
     bzero(buffer, 1024);
     recv(client_sock, buffer, sizeof(buffer), 0);
-    printf("Client: %s\n", buffer);
+    printf("[<]Client: %s\n", buffer);
     bzero(filebuffer, 1024);
     // Записать сообщение от клиента в файл
     FILE *log = fopen("log.txt", "a+");
     if (log != NULL) {
-        printf("Log file opened successfully\n");
+        printf("[~]log.txt opened successfully\n");
         fputs(buffer, log);
+        fputs("\n", log);
         fclose(log);
     }
 
     FILE *serverdata = fopen("serverdata.txt", "r");
     if (serverdata != NULL) {
+        printf("[~]serverdata.txt opened successfully\n");
         fgets(filebuffer, 1024, serverdata);
         fclose(serverdata);
     }
 
-    printf("Server: %s\n", filebuffer);
+    printf("[>]Server: %s\n", filebuffer);
     send(client_sock, filebuffer, strlen(filebuffer), 0);
 
     close(client_sock);
