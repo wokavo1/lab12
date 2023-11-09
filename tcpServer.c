@@ -7,7 +7,7 @@
 int main(int argc, char **argv){
     printf("argc = %d\n", argc);
 
-    for (i=0; i < argc; i++)
+    for (int i=0; i < argc; i++)
         puts(argv[i]);
 
     char *ip = "127.0.0.1";
