@@ -4,7 +4,12 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-int main(){
+int main(int argc, char **argv){
+    printf("argc = %d\n", argc);
+
+    for (i=0; i < argc; i++)
+        puts(argv[i]);
+
     char *ip = "127.0.0.1";
     int port = 8000;
 
