@@ -10,6 +10,11 @@ int main(int argc, char **argv){
     for (int i=0; i < argc; i++)
         puts(argv[i]);
 
+    if (argc < 3) {
+        printf("too few arguments");
+        return 0;
+    }
+
     char *ip = "127.0.0.1";
     int port = 8000;
 
@@ -50,7 +55,8 @@ int main(int argc, char **argv){
         recv(client_sock, buffer, sizeof(buffer), 0);
         printf("[<]Client: %s\n", buffer);
         // Записать сообщение от клиента в файл
-        FILE *log = fopen("log.txt", "a+");
+        //FILE *log = fopen("log.txt", "a+");
+        FILE *log = fopen(argv[1], "a+");
         if (log != NULL) {
             printf("[~]log.txt opened successfully\n");
             fputs(buffer, log);
@@ -58,7 +64,8 @@ int main(int argc, char **argv){
             fclose(log);
         }
         bzero(buffer, 1024);
-        FILE *serverdata = fopen("serverdata.txt", "r");
+        //FILE *serverdata = fopen("serverdata.txt", "r");
+        FILE *serverdata = fopen(argv[2], "r");
         if (serverdata != NULL) {
             printf("[~]serverdata.txt opened successfully\n");
             while (fgets(buffer, 20, serverdata)) {
